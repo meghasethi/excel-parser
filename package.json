@@ -1,0 +1,19 @@
+{
+	"name": "excel-parser",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node app"
+	},
+	"dependencies": {
+		"errorhandler": "1.4.1",
+		"express": "4.15.2",
+		"multer": "0.1.8",
+		"http": "0.0.0",
+		"path": "0.11.14",
+		"xlsx": "0.11.3",
+		"xlsx-style": "^0.8.13",
+		"ejs": "^2.5.7",
+    "body-parser": "1.13.2"
+	}
+}
