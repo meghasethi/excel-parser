@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Excel parser
+    </title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="jquery.jsontotable.min.js"></script>
+</head>
+
+<body>
+    <h1>
+        Excel parser
+    </h1>
+    <form id="uploadForm" enctype="multipart/form-data" action="javascript:void(0);" method="post">
+        <input type="file" id="filename" name="file" />
+    </form>
+
+    <div id="jsontotable"></div>
+</body>
+
+<script>
+    $("#filename").change(function(e) {
+        var formData = new FormData($("#uploadForm")[0]);
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(mydata) {
+                console.log(mydata);
+
+                $.makeTable = function(mydata) {
+                    var table = $('<table border=1>');
+                    var tblHeader = "<tr>";
+                    for (var k in mydata[0]) tblHeader += "<th>" + k + "</th>";
+                    tblHeader += "</tr>";
+                    $(tblHeader).appendTo(table);
+                    $.each(mydata, function(index, value) {
+                        var TableRow = "<tr>";
+                        $.each(value, function(key, val) {
+                            TableRow += "<td>" + val + "</td>";
+                        });
+                        TableRow += "</tr>";
+                        $(table).append(TableRow);
+                    });
+                    return ($(table));
+                };
+
+                var table = $.makeTable(mydata);
+                $(table).appendTo("#jsontotable");
+            },
+            error: function(result) {},
+            beforeSubmit: function() {},
+            uploadProgress: function(event, position, total, percentComplete) {},
+        });
+    });
+</script>
+
+</html>
